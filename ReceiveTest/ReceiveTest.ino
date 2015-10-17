@@ -19,10 +19,8 @@ void setup()
 void loop() {
   if (irrecv.decode(&results)) {
  //   Serial.println("Recieved");
-    Serial.println(results.value, HEX);
     char pressedButton[10];
-    decoder(results.value,pressedButton);
-    Serial.print("Detected Button : ");Serial.println(pressedButton);
+    decoder();
     irrecv.resume(); // Continue receiving
     
   }else {
@@ -31,14 +29,12 @@ void loop() {
   delay(1000);
 }
 
-void decoder(long value,char* outVal) {
-  Serial.println(value);
-  if(value==POWER_BUTTON){
-    outVal = "POWER" ; 
-  }else if(value==TEMP_UP_BUTTON){
-    outVal =  "TEMP UP";
-  }else if(value=TEMP_DOWN_BUTTON){
-    outVal =  "TEMP_DOWN";
+void decoder() {
+  switch(results.value){
+    case POWER_BUTTON : Serial.println("POWER BUTTON"); break;
+    case TEMP_UP_BUTTON : Serial.println("TEMP_UP BUTTON"); break;
+    case TEMP_DOWN_BUTTON : Serial.println("TEMP_DOWN BUTTON"); break;
+    default : Serial.println("OTHER BUTTON");
   }
 }
 
